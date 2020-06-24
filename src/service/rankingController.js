@@ -1,13 +1,19 @@
 import rankingModel from "../repository/rankingModel";
 
-// Getting job id as input and return classes with num and class A cvs
-const mainFunction = (req, res) => {
+// To Classify cvs of some job 
+const classifying = async (req, res) => {
+    const {jobID} = req.params;
+    const cvs = await rankingModel.find({});
+}
+
+// Get classes each with num
+const classesWithNum = (req, res) => {
     
 }
 
 // Getting cvs of some class
-const getClass = () => {
-
+const getClass = (req, res) => {
+        
 }
 
 // Getting cv with cvID
@@ -15,4 +21,4 @@ const getCV = () => {
 
 }
 
-module.exports = {getClass, mainFunction, getCV};
+module.exports = {classifying, getClass, classesWithNum, getCV};
