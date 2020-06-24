@@ -25,12 +25,18 @@ const classesWithNum = (req, res) => {
 
 // Getting cvs of some class
 const getClass = (req, res) => {
-        
+    const {jobID, classType} = req.params;
+    rankingModel.find({class: classType.toUpperCase()})
+        .then((cvs) => res.json(cvs))
+        .catch((err) => res.status(400).json(err)); 
 }
 
 // Getting cv with cvID
-const getCV = () => {
-
+const getCV = (req, res) => {
+    const {jobID, cvID} = req.params;
+    rankingModel.find({_id: cvID})
+        .then((cv) => res.json(cv))
+        .catch((err) => res.status(400).json(err));
 }
 
 module.exports = {classifying, getClass, classesWithNum, getCV};
