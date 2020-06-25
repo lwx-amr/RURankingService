@@ -17,6 +17,10 @@ const CVSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    class: {
+        type: String,
+        required: false
+    },
     created_date:{
         type:Date,
         default: Date.now
