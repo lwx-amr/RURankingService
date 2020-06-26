@@ -1,9 +1,24 @@
 import rankingModel from "../repository/rankingModel";
 
 // To Classify cvs of some job 
-const classifying = async (req, res) => {
+const classifying = (req, res) => {
     const {jobID} = req.params;
-    const cvs = await rankingModel.find({});
+    rankingModel.find({ jobID: jobID })
+        .then((cvs) => {
+            cvs.forEach(cv => {
+
+                if (cv.weight >= 0.8)   //0.8 is subjective, will be changed later!
+                    cv.class = "A";
+                else if (cv.weight < 0.8 && cv.weight >= 0.55)
+                    cv.class = "B";
+                else
+                    cv.class = "C";
+                cv.save();
+            });
+            res.json(cvs)
+            
+        })
+        .catch((err => { res.status(400).json(err) }))
 }
 
 // For a particular job, return how many CVs are there in each class!

@@ -3,7 +3,7 @@ import {classifying, getClass, cvsCountPerClass, getCV} from "../service/ranking
 
 const router = express.Router();
 
-router.route("/ranking:jobID")
+router.route("/ranking/:jobID")
     .get(classifying);
 
 // Rendering data for ui
