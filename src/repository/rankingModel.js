@@ -6,28 +6,30 @@ const CVSchema = mongoose.Schema({
         required: true,
         unique: true,
     },
-    cvs:[{
-        path: {
-		    type: String,
-		    required: true
-        },
-        weight:{
-		    type:Number,
-		    required: true
-        },
-        name:{
-		    type: String,
-		    required: true
-        },
-        email:{
-		    type: String,
-		    required: true
-        },
-        class: {
-		    type: String,
-		    required: false
-        },
-    }],
+    cvs:[
+        {
+            path: {
+                type: String,
+                required: true
+            },
+            weight:{
+                type:Number,
+                required: true
+            },
+            name:{
+                type: String,
+                required: true
+            },
+            email:{
+                type: String,
+                required: true
+            },
+            class: {
+                type: String,
+                required: false
+            },
+        }
+    ],
     created_date:{
         type:Date,
         default: Date.now

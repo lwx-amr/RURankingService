@@ -19,7 +19,7 @@ const classifying = (req, res) => {
         .catch((err => { res.status(400).json(err) }))
 }
 
-// Get classes each with num
+// For a particular job, return how many CVs are there in each class!
 const classesWithNum = (req, res) => {
     const {jobID} = req.params;
     const classes = {
@@ -135,10 +135,10 @@ module.exports = {classifying, getClass, classesWithNum};
             class:'',
         }
     ]
+
 }
 const dummu = rankingModel(data);
 dummu.save()
     .then(result => console.log(result))
     .catch(err => console.log(err))
     */
-
