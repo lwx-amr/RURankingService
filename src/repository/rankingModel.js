@@ -3,24 +3,31 @@ import mongoose from "mongoose";
 const CVSchema = mongoose.Schema({
     jobID: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
-    path: {
-        type: String,
-        required: true
-    },
-    weight:{
-        type:Number,
-        required: true
-    },
-    name:{
-        type: String,
-        required: true
-    },
-    class: {
-        type: String,
-        required: false
-    },
+    cvs:[{
+        path: {
+		    type: String,
+		    required: true
+        },
+        weight:{
+		    type:Number,
+		    required: true
+        },
+        name:{
+		    type: String,
+		    required: true
+        },
+        email:{
+		    type: String,
+		    required: true
+        },
+        class: {
+		    type: String,
+		    required: false
+        },
+    }],
     created_date:{
         type:Date,
         default: Date.now
