@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import helmet from "helmet";
 import RateLimit from "express-rate-limit";
 import config from "config";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 
 // loading Routes
 import rankingRoutes from "./api/rankingRoutes";
@@ -12,17 +14,27 @@ const port = config.get("app.port");
 const db = config.get("database.url");
 const prefix = config.get("api.prefix");
 const app  =  express();
+const corsOptions = {
+    origin: config.get("client.url"),
+    credentials: true
+};
 
 // Using helmet to increase security
 app.use(helmet());
 
-// Middleware to add header to response of the any request
+// Enable cors
+app.use(cors(corsOptions));
+
+// Enable cookie parser
+app.use(cookieParser())
+
+/*// Middleware to add header to response of the any request
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization,x-api-key");
     next();
-});
+});*/
 
 // Using Limiter to prevent attacks
 new RateLimit({
