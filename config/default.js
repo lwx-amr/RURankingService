@@ -4,7 +4,7 @@ module.exports = {
     app: {
         name: "RankingService",
         baseUrl: `http://localhost:`,
-        port: process.env.PORT || 3006
+        port: process.env.PORT || 3004
     },
     client: {
         url: process.env.CLIENT || 'http://localhost:3000'
@@ -14,6 +14,6 @@ module.exports = {
         version: [1],
     },
     database: {
-        url: process.env.DB_URL || "mongodb+srv://rankup:rank1998@cluster0-9enme.mongodb.net/RURanking?retryWrites=true&w=majority",
+        url: process.env.DB_URL || "mongodb+srv://rankup:rank1998@cluster0-9enme.mongodb.net/RUModelDB?retryWrites=true&w=majority",
     }
 };

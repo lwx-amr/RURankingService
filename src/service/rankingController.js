@@ -5,18 +5,25 @@ const classifying = (req, res) => {
     const {jobID} = req.params;
     rankingModel.findOne({ jobID: jobID })
         .then((job) => {
-            job.cvs.forEach(cv => {
-                if (cv.weight >= 0.7)   //0.7 is subjective, will be changed later!
+            const classAPercent = Math.floor(job.CVs.length*0.2);
+            const classBPercent = Math.floor(job.CVs.length*0.4);
+            console.log(classAPercent, classBPercent); 
+            let i = 0;
+            job.CVs.forEach(cv => {
+                if (i >= 0 && i < classAPercent)
                     cv.class = "A";
-                else if (cv.weight < 0.7 && cv.weight >= 0.5)
+                else if (i >= classAPercent && i < (classBPercent+classAPercent))
                     cv.class = "B";
                 else
                     cv.class = "C";
+                i++;
             });
-            job.save();
+            job.save()
+                .then(data => console.log(data))
+                .catch(err => console.log("err", err));
             res.json(job);
         })
-        .catch((err => { res.status(400).json(err) }))
+        .catch((err => { console.log(err); res.status(400).json(err); }))
 }
 
 // For a particular job, return how many CVs are there in each class!
@@ -30,7 +37,7 @@ const classesWithNum = (req, res) => {
     };
     rankingModel.findOne({jobID})
         .then((job) => {
-            job.cvs.forEach(cv => classes[cv.class] = classes[cv.class]+1);
+            job.CVs.forEach(cv => classes[cv.class] = classes[cv.class]+1);
             res.json(classes);
         })
         .catch((err) => res.status(400).json(err)); 
@@ -42,7 +49,7 @@ const getClass = (req, res) => {
     rankingModel.findOne({jobID})
         .then(job => {
             const cvs = [];
-            job.cvs.forEach(cv => {
+            job.CVs.forEach(cv => {
                 if(cv.class === classType.toUpperCase())
                     cvs.push(cv);
             })
@@ -53,92 +60,3 @@ const getClass = (req, res) => {
 
 
 module.exports = {classifying, getClass, classesWithNum};
-
-/*const data = {
-    jobID: '5eeeaf22338218d14717a2d5',
-    cvs:[
-        {
-            path: 'Amr.pdf',
-            weight: 0.916,
-            name: 'Amr Hussien',
-            email: 'amr.ister20@gmail.com',
-            class:'',
-        },
-        {
-            path: 'saad.pdf',
-            weight: 0.716,
-            name: 'Saad Hussien',
-            email: 'saad.ister20@gmail.com',
-            class:'',
-        },
-        {
-            path: 'ezzat.pdf',
-            weight: 0.816,
-            name: 'Ezzat Hussien',
-            email: 'ezzat.ister20@gmail.com',
-            class:'',
-        },
-        {
-            path: 'ezzat.pdf',
-            weight: 0.416,
-            name: 'Ezzat Hussien',
-            email: 'ezzat.ister20@gmail.com',
-            class:'',
-        },
-        {
-            path: 'ezzat.pdf',
-            weight: 0.516,
-            name: 'Ezzat Hussien',
-            email: 'ezzat.ister20@gmail.com',
-            class:'',
-        },
-        {
-            path: 'ezzat.pdf',
-            weight: 0.616,
-            name: 'Ezzat Hussien',
-            email: 'ezzat.ister20@gmail.com',
-            class:'',
-        },
-        {
-            path: 'ezzat.pdf',
-            weight: 0.816,
-            name: 'Ezzat Hussien',
-            email: 'ezzat.ister20@gmail.com',
-            class:'',
-        },
-        {
-            path: 'ezzat.pdf',
-            weight: 0.416,
-            name: 'Ezzat Hussien',
-            email: 'ezzat.ister20@gmail.com',
-            class:'',
-        }
-        ,{
-            path: 'ezzat.pdf',
-            weight: 0.316,
-            name: 'Ezzat Hussien',
-            email: 'ezzat.ister20@gmail.com',
-            class:'',
-        },
-        {
-            path: 'ezzat.pdf',
-            weight: 0.116,
-            name: 'Ezzat Hussien',
-            email: 'ezzat.ister20@gmail.com',
-            class:'',
-        },
-        {
-            path: 'ezzat.pdf',
-            weight: 0.116,
-            name: 'Ezzat Hussien',
-            email: 'ezzat.ister20@gmail.com',
-            class:'',
-        }
-    ]
-
-}
-const dummu = rankingModel(data);
-dummu.save()
-    .then(result => console.log(result))
-    .catch(err => console.log(err))
-    */

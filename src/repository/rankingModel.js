@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 
 const CVSchema = mongoose.Schema({
     jobID: {
-        type: String,
+        type:String,
         required: true,
         unique: true,
     },
-    cvs:[
+    CVs:[
         {
             path: {
                 type: String,
@@ -18,11 +18,11 @@ const CVSchema = mongoose.Schema({
             },
             name:{
                 type: String,
-                required: true
+                required: false
             },
             email:{
                 type: String,
-                required: true
+                required: false
             },
             class: {
                 type: String,
@@ -36,6 +36,6 @@ const CVSchema = mongoose.Schema({
     }
 });
 
-const rankingModel = mongoose.model('cvs', CVSchema);
+const rankingModel = mongoose.model('jobs_cvs', CVSchema);
 
 module.exports = rankingModel;
